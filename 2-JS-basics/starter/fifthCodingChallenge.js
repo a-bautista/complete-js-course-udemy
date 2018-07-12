@@ -118,11 +118,43 @@ if (tipUserOne > tipUserTwo){
     console.log("User one paid " + tipUserOne + " and user two paid " + tipUserTwo +" . Both users paid the same.")
 }
 
+
 /*
-var tips = new Array();
-tips.push(tips_user_one.tips);
-tips.push(tips_user_two.tips);
-console.log(tips)
-averageTip(tips);
-*/
+
+var john = {
+    fullName: 'John Smith',
+    bills: [124,48,268,180,42],
+    calcTips: function(){
+        this.tips = [];
+        this.finalValues = [];
+        
+        for (var i = 0; i<this.bills.length; i++){
+            var percentage;
+            var bill = this.bills[i];
+            if (bill < 50){
+                percentage = 0.2;
+            }else if(bill >= 50 && bill < 200){
+                percentage = 0.15;
+            }else{
+                percentage = 0.1;
+            }
+            this.tips[i] = bill * percentage;
+            this.finalValues[i] = bill + bill * percentage;
+        }
+    }
+}
+
+john.calcTips();
+
+var Person = {
+    firstName: prompt("What's your name?"),
+    bills: prompt("How many bills you want to pay?"),
+    calcTips: function(){
+        this.tips = [];
+        this.finalValues = [];
+        for (var i = 0; i<bills; i++){
+            this.tips[i] = prompt("Amount of bill " + i); 
+    }    
+    
+}*/
 
