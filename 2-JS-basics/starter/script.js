@@ -258,3 +258,106 @@ console.log(names);
 console.log(names.indexOf('John')); //locate if an element is an array
 //-1 indicates that the element was not found
 
+/*****************************************
+* Objects and properties
+*/
+
+
+var person = {
+    firstName: 'john',
+    lastName: 'Smith',
+    birthYear: 1990,
+    family: ['Jane','Mark','Bob'],
+    job: 'teacher',
+    isMarried: 'false'
+};
+
+console.log(person.firstName + ' ' + person.lastName)
+console.log(person['family']);
+console.log(typeof(person));
+
+var jane = new Object();
+jane.firstName = 'Jane';
+jane.birthYear = 1969;
+
+console.log(jane);
+
+/*****************************************
+* Objects and methods
+*/
+
+var person = {
+    firstName: 'john',
+    lastName: 'Smith',
+    birthYear: 1990,
+    family: ['Jane','Mark','Bob'],
+    job: 'teacher',
+    isMarried: 'false',
+    calcAge: function(){
+        return 2018 - this.birthYear; // current birthYear for person
+    }
+};
+
+console.log(person.calcAge(1990));
+person.age = person.calcAge();
+
+//a better approach
+
+var person = {
+    firstName: 'john',
+    lastName: 'Smith',
+    birthYear: 1990,
+    family: ['Jane','Mark','Bob'],
+    job: 'teacher',
+    isMarried: 'false',
+    calcAge: function(){
+        this.age = 2018 - this.birthYear; // current birthYear for person
+    }
+};
+
+person.calcAge();
+console.log(person.age);
+console.log(person);
+
+/*****************************************
+* Loops and iteration
+*/
+
+for (var i = 0; i < 10; i++){
+    console.log(i)
+}
+
+var people = ['John','Jane','Richard',1990,'Tim'];
+
+for (var i=0; i < people.length; i++){
+    console.log(people[i]);
+}
+
+//looping backwards
+for (var i=people.length -1; i>=0; i--){
+    console.log(people[i]);
+}
+
+var i = 0;
+while(i< people.length){
+    console.log(people[i]);
+    i++;
+}
+
+console.log('Continue statement');
+//continue and break statements
+for (var i=0; i < people.length; i++){
+    //console.log(typeof(people[i]));
+    if (typeof people[i] !== 'string') continue; //if you find a variable different from string then continue printing
+    console.log(typeof(people[i]));
+    console.log(people[i]);  
+}
+
+console.log('Break statement');
+//continue and break statements
+for (var i=0; i < people.length; i++){
+    //console.log(typeof(people[i]));
+    if (typeof people[i] !== 'string') break; //if you find a variable different from string then continue printing
+    console.log(typeof(people[i]));
+    console.log(people[i]);  
+}
