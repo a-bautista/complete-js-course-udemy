@@ -9,7 +9,7 @@ GAME RULES:
 */
 
 
-var scores, roundScore, activePlayer, gamePlaying;
+var scores, roundScore, activePlayer, gamePlaying, previousValueDice = [0,0];
 init();
 
 //setter
@@ -27,28 +27,48 @@ init();
 //roll dice button
 document.querySelector('.btn-roll').addEventListener('click', function() {
     
+    
     if (gamePlaying){
         //1. Random number
-        var dice         = (Math.floor(Math.random()*6)) + 1;
-
-        //2. Display the result
-        var diceDOM = document.querySelector('.dice');
-        diceDOM.style.display = 'block';
-        diceDOM.src = 'dice-'+dice + '.png';
-
-        //3. Update the round score if the rolled number was not a 1
-        if (dice !== 1){
-            // Add score
-            //roundScore = roundScore + dice;
-            roundScore += dice;
-            // display the results
-            document.querySelector('#current-' + activePlayer).textContent = roundScore;
-
-        }else{
-            //Next player
+        var dice          = (Math.floor(Math.random()*6)) + 1;
+        //previousValueDice = dice;
+        
+        if (dice === 6 && previousValueDice[activePlayer] === 6){
+            console.log('Current player: '+(parseInt(activePlayer)+parseInt(1))); 
+            console.log('Value of current dice:'+dice);
+            console.log('Value of previous dice:'+previousValueDice);
+            console.log('You lose points');
+            //lose your points and next player continues
+            scores[activePlayer] = 0;
+            //document.getElementById('current-'+activePlayer).textContent = '0'; // display the results to 0
+            document.getElementById('score-'+activePlayer).textContent   = '0';
             nextPlayer();
-        }    
-    }
+            
+        }else{
+            //2. Display the result
+            console.log('Current player: '+(parseInt(activePlayer)+parseInt(1))); 
+            console.log('Value of current dice:'+dice);
+            console.log('Value of previous dice:'+previousValueDice);
+            
+            var diceDOM = document.querySelector('.dice');
+            diceDOM.style.display = 'block';
+            diceDOM.src = 'dice-'+dice + '.png';
+            previousValueDice[activePlayer] = dice; //store the previousValueDice for the current player
+
+            //3. Update the round score if the rolled number was not a 1
+            if (dice !== 1){
+                // Add score
+                //roundScore = roundScore + dice;
+                roundScore += dice;
+                // display the results
+                document.querySelector('#current-' + activePlayer).textContent = roundScore;
+
+            }else{
+                //Next player
+                nextPlayer();
+            } // end inner most if-else statement
+        }// end the middle if-else statement
+    }//end outer most if-else statement
 });
 
 
@@ -91,14 +111,16 @@ function nextPlayer(){
     document.querySelector('.dice').style.display = 'none';    
 }
 
+//start a new game
 document.querySelector('.btn-new').addEventListener('click', init);
 
-
+//initiate the new game 
 function init(){
     scores       = [0,0];
     roundScore   = 0;
     activePlayer = 0;
     gamePlaying = true;
+    previousValueDice = [0,0];
     
     //stop displaying the image of the dice
     document.querySelector('.dice').style.display = 'none';
@@ -116,3 +138,14 @@ function init(){
     document.querySelector('.player-1-panel').classList.remove('active');
     document.querySelector('.player-0-panel').classList.add('active');
 }
+
+/* Challenges
+
+1. A player looses his entire score when he rolls two 6 in a row. After that, it's the next player's turn. (Hint: Always save the previous dice roll in a separate variable) DONE!
+2. Add an input field to the html where players can set the winning score, so that they can change the predefined score of 100. (Hint: you can read that value with the .value property in JS.)
+3. Add another dice to the game, so that there are 2 dices now. The player looses his current score when one of them is a 1. (Hint: you will need CSS to position the second dice, so take a look at the CSS code for the first one.)
+
+
+
+
+*/
