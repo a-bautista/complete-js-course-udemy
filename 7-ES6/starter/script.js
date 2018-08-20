@@ -574,3 +574,93 @@ class AthleteES6 extends PersonES6 {
 }
 
 const peterAthleteES6 = new AthleteES6('Peter', 1990, 2016, 3);
+
+
+/* Coding challenge solution */
+
+class Element {
+    constructor(name, buildYear){
+        this.name = name;
+        this.buildYear = buildYear;
+    }
+}
+
+class Park extends Element{
+    constructor (name, buildYear, area, numTrees){
+        super(name, buildYear);
+        this.area = area;
+        this.numTrees = numTrees;
+    }
+    
+    treeDensity (){
+        const density = this.numTrees / this.area;
+        console.log(`${this.name} has a tree density of ${density} trees per square km.`);
+    }
+    
+    
+}
+
+
+class Street extends Element{
+    constructor (name, buildYear, length, size = 3){
+        super(name, buildYear);
+        this.length = length;
+        this.size = size;
+    }
+    
+    classifyStreet(){
+        const classification = new Map();
+        classification.set(1, 'tiny');
+        classification.set(2, 'small');
+        classification.set(3, 'normal');
+        classification.set(4, 'big');
+        classification.set(5, 'huge');
+        console.log(`${this.name}, built in ${this.buildYear}, is a ${classification.get(this.size)} street`);
+        
+    }
+}
+
+const Parks = [new Park('Green Park', 1987, 0.2, 215),
+               new Park('National Park', 1894, 2.9, 3541)]
+
+const Streets = [new Street('Ocean Ave', 1999, 1.1, 4),
+                 new Street('Evergreen', 2002, 2.7, 2)]
+
+function calc(arr){
+    
+    //reduce method reduces an array to a single value = np.sum()
+    const sum = arr.reduce((previous, current, index) => previous+current, 0);
+    return [sum, sum/arr.length];
+    
+}
+
+
+function reportParks(p){
+    console.log('------------------Parks report---------------');
+    
+    p.forEach(element => element.treeDensity());
+    
+    const ages = p.map(element => new Date().getFullYear() - element.buildYear);
+    const [totalAge, avAge] = calc(ages);
+    
+    console.log(`Our ${p.length} parks have an average of ${p.average} years`);
+    
+    const index = p.map(element => element.numTrees).findIndex(element => 1000);
+    console.log(`${p[index].name} has more than 1000 trees.`);
+    
+}
+
+function reportStreets(s){
+    console.log('------------------Streets report---------------');
+    
+    const [totaLength, avLength] = calc(s.map(element => element.length));
+    console.log(`Our ${s.length} streets have a total length of ${s.totalLength} km with an average of ${s.averageLength} km.`);
+
+    s.forEach(element => element.classifyStreet());
+    
+    
+    
+}
+
+reportParks(Parks);
+reportStreets(Streets);

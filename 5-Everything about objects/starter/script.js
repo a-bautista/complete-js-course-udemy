@@ -32,7 +32,7 @@ var john = new Person('John', 1990, 'teacher');
 var jane = new Person('Jane', 1980, 'designer');
 var mark = new Person('Mark', 1970, 'retired');
 
-
+//call the newly created questions with their answers
 john.calculateAge();
 jane.calculateAge();
 mark.calculateAge();
@@ -248,3 +248,114 @@ var rosemaryFriendly = rosemary.presentation.bind(rosemary, 'friendly');
 // Carrying - we create a function 
 rosemaryFriendly('afternoon');
 rosemaryFriendly('morning');
+
+/* 
+
+-------------------------- Coding challenge --------------------
+   1. Build a function constructor called Question to describe a question. A question should include: 
+        a) Question itself
+        b) The answers from which the player can choose the correct one (choose an adequate data structure here, array, object, etc.)
+        c) Correct answer (use a number for this)
+    2. Create a couple of questions using the constructor
+    3. Store them all inside an array
+    4. Select one random question and log it on the console, together with the possible answers (each question should have a number) (Hint: write a method for the Question objects for this task).
+    5. Use the 'prompt' function to ask the user for the correct answer. The user should input the number of the correct answer such as you displayed it on task 4.
+    6. Check if the answer is correct and print to the console whether the answer is correct or not (hint: write another method for this).
+    7. Suppose this code would be a plugin for other programmers to use in their code. so make sure that all your code is private and doesn't interfere with the other programmers code (hint: we learnt a special technique to do exactly that).
+
+------------------------------------------------------------------
+*/
+
+//IIFE - maintains privacy
+(function(){
+    // Blue print of an object as a function constructor
+    var Question = function(question, answers, correctAnswer){
+        this.question = question;
+        this.answers  = answers;
+        this.correctAnswer = correctAnswer;
+    }
+    
+    
+    
+//Another approach to solve the problem
+    
+Question.prototype.displayQuestion = function(){
+  console.log(this.question);
+  for (var i =0; i < this.answers.length; i++){
+      console.log(this.answers[i]);
+  }
+};
+
+Question.prototype.checkAnswers = function(ans, callback){
+    //callback - you receive a function (score)
+    var sc;
+    if(ans === this.correctAnswer){
+        alert("Correct answer");
+        sc = callback(true); //because it returns something, we need to declare a new variable. This updates the score.
+    }else{
+        alert("Incorrect answer");
+        sc = callback(false);//because it returns something, we need to declare a new variable. This does not update the score.
+    }
+    
+    this.displayScore(sc); //this makes reference to Question
+    
+};
+    
+Question.prototype.displayScore = function(score){
+    console.log('Your current score is: '+ score);
+    console.log('-----------------------');
+};
+    
+var question1 = new Question('What\'s the capital of Mexico?', ['Ottawa', 'Washington D.C.', 'Mexico City', 'Brasilia', ], 'Mexico City');
+var question2 = new Question('Who was the founder of Western philosophy?', ['Plato', 'Descartes', 'Socrates', 'Hegel', ], 'Socrates');
+var question3 = new Question('Who invented the daily number system (1,2,3,4,...)?',['Arabs', 'Franks', 'Indians', 'Japanese'], 'Arabs');
+
+var questions = [question1, question2, question3];
+    
+function score(){
+    var sc = 0;
+    return function(correct){
+        if(correct){
+                sc++;
+           }
+        return sc;
+    }
+}
+    
+var keepScore = score();
+
+/*function nextQuestion(){
+    var n = Math.floor(Math.random() * (questions.length));
+    questions[n].displayQuestion();
+    var answer = prompt("Select the correct answer");
+    if(answer!=='exit'){
+        questions[n].checkAnswers(answer, keepScore); //first function class
+        nextQuestion(); //call the same function in case the word exit hasn't been typed
+    }
+}
+
+nextQuestion();//call the 
+
+*/
+
+    
+
+function pickRandomQuestion(arr){
+    var selectedQuestionNumber = Math.floor(Math.random() * (arr.length));
+    var selectedQuestion = arr[selectedQuestionNumber];
+    alert(selectedQuestion['question']);
+    var answer = prompt(selectedQuestion['answers']);
+    
+    return function determineAnswer(){
+    	if (answer === selectedQuestion['correctAnswer']){
+			alert('Good answer');
+		}else{
+			alert('Bad answer');
+		}
+	}
+}
+
+pickRandomQuestion(questions)();
+
+}();
+
