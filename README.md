@@ -13,5 +13,5 @@
 | 6  | Project Budget      | Second project fully working: The budget app. (Not in ES6) |
 | 7  | ES6                 | Remarks and useful notes about all the new and modern standard syntax that is now being used in real world JS apps. The script.js file contains the notes of this section. |
 | 8  | Asynchronous JS     | Overview of advanced techniques in ES6 and definition about promises, synchronous vs asynchronous JS, event loops and APIs. The notes are in the asynchronous.html file. |
-| 9  | Forkify             | Third and last fully working project build in ES6. In order to use this project you need to register to http://food2fork.com, so you can use your own API key. The API key goes into the src/js/config.js file by typing export const key = 'INSERT YOUR API KEY'; |
+| 9  | Forkify             | Third and last fully working project build in ES6. In order to use this project you need to register to http://food2fork.com, so you can use your own API key. The API key goes into the src/js/config.js file by typing export const key = 'INSERT YOUR API KEY'; IN order to run this project, you need to install the dependencies that are required in the package.json file and execute the commands npm run build and npm run start. |
 | 10 | Additional notes    | Screenshots of useful remarks from the final exam. |
